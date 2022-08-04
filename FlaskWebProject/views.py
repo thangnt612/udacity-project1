@@ -23,15 +23,10 @@ imageSourceUrl = 'https://' + app.config['BLOB_ACCOUNT'] + \
 def home():
     log = request.values.get('log_button')
     print('------------------log-------------------' + str(log) + '-----------------------------')
-    if log:
-        if log == 'None':
-            app.logger.info('No issue.')
-        elif log == 'warning':
-            app.logger.warning('Warning occurred.')
-        elif log == 'error':
-            app.logger.error('Error occurred.')
-        elif log == 'critical':
-            app.logger.critical('Critical error occurred.')
+   
+     
+    app.logger.info('No issue.')
+ 
 
     user = User.query.filter_by(username=current_user.username).first_or_404()
     posts = Post.query.all()
@@ -101,7 +96,7 @@ def login():
 # Its absolute URL must match your app's redirect_uri set in AAD
 @app.route(Config.REDIRECT_PATH)
 def authorized():
-    print('authorized----------------------------')
+
     if request.args.get('state') != session.get("state"):
         return redirect(url_for("home"))  # No-OP. Goes back to Index page
     if "error" in request.args:  # Authentication/Authorization failure
