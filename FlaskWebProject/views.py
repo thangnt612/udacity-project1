@@ -22,12 +22,7 @@ imageSourceUrl = 'https://' + app.config['BLOB_ACCOUNT'] + \
 @login_required
 def home():
     log = request.values.get('log_button')
-    print('------------------log-------------------' + str(log) + '-----------------------------')
-   
-     
     app.logger.warning('No issue.')
- 
-
     user = User.query.filter_by(username=current_user.username).first_or_404()
     posts = Post.query.all()
     return render_template(
