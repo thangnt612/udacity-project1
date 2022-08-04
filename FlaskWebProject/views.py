@@ -25,7 +25,7 @@ def home():
     print('------------------log-------------------' + str(log) + '-----------------------------')
    
      
-    app.logger.info('No issue.')
+    app.logger.warning('No issue.')
  
 
     user = User.query.filter_by(username=current_user.username).first_or_404()
@@ -58,7 +58,7 @@ def new_post():
 @login_required
 def post(id):
     post = Post.query.get(int(id))
-    app.logger.info('Get all post')
+    app.logger.warning('Get all post')
     form = PostForm(formdata=request.form, obj=post)
     if form.validate_on_submit():
         post.save_changes(form, request.files['image_path'], current_user.id)
@@ -79,10 +79,10 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user is None or not user.check_password(form.password.data):
-            app.logger.info('Invalid username or password')
+            app.logger.warning('Invalid username or password')
             flash('Invalid username or password')
             return redirect(url_for('login'))
-        app.logger.info('login success')
+        app.logger.warning('login success')
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
